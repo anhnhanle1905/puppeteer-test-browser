@@ -16,7 +16,6 @@ async function bootstrap(options = {}) {
   await appPage.goto(appUrl, { waitUntil: "load" });
 
   const targets = await browser.targets();
-  console.log("targets: ", targets);
 
   const extensionTarget = targets.find(
     (target) => target.type() === "background_page"
@@ -25,12 +24,10 @@ async function bootstrap(options = {}) {
 
   const partialExtensionUrl = extensionTarget.url() || "";
 
-  // const [, , extensionId] = partialExtensionUrl.split("/");
-
-  const extensionId = `dmkamcknogkgcdfhhbddcghachkejeap`;
+  const [, , extensionId] = partialExtensionUrl.split("/");
 
   const extPage = await browser.newPage();
-  const extensionUrl = `chrome-extension://${extensionId}/popup.html`;
+  const extensionUrl = `chrome-extension://${extensionId}/popup.html#/register`;
   console.log("extensionUrl: ", extensionUrl);
   // const extensionUrl = `chrome-extension://dmkamcknogkgcdfhhbddcghachkejeap/popup.html#/register`;
 

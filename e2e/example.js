@@ -1,11 +1,12 @@
+"use strict";
 const { bootstrap } = require("./bootstrap");
 
-describe("Test flow import phrase seed  with Keplr wallet extension", () => {
+describe("test text replacer extension with react app", () => {
   let extPage, appPage, browser;
 
   beforeAll(async () => {
     const context = await bootstrap({
-      appUrl: "http://localhost:3000/" /*, slowMo: 50, devtools: true*/,
+      appUrl: "http://localhost:3000" /*, slowMo: 50, devtools: true*/,
     });
 
     extPage = context.extPage;
@@ -13,15 +14,14 @@ describe("Test flow import phrase seed  with Keplr wallet extension", () => {
     browser = context.browser;
   });
 
-  it("should click button Import exists account", async () => {
+  it("should render a button in the web application", async () => {
     //button Import exists account
-    const importExistsAccountButton = await extPage.$(
-      ".btn-block:nth-child(5)"
-    );
-    await importExistsAccountButton.click();
-  });
+    const importExistsAcountBtn = await extPage.$(".btn-block:nth-child(5)");
+    await importExistsAcountBtn.click();
 
-  it("should fill in information for 12 mnemonics word", async () => {
+    // const mnemonicWordInput = await extPage.$(
+    //   "input#input-3e771990.form-control-alternative.mnemonic-word-2MRgQjQymFPecHj7k4DObI.input-3D4RiQgfsq6CVDibN-Ssyh.form-control"
+    // );
     const mnemonicWordInput1 = await extPage.$(
       ".mnemonic-word-container-1RmztzrkGoAxhL0xjcxz9y:nth-child(1) .input-3D4RiQgfsq6CVDibN-Ssyh"
     );
@@ -81,9 +81,7 @@ describe("Test flow import phrase seed  with Keplr wallet extension", () => {
       ".mnemonic-word-container-1RmztzrkGoAxhL0xjcxz9y:nth-child(12) .input-3D4RiQgfsq6CVDibN-Ssyh"
     );
     await mnemonicWordInput12.type("circle");
-  });
 
-  it("should fill in your account information", async () => {
     const accountNameInput = await extPage.$(
       ".form-inner-container-1OFu9k06LiZAc8a8NY7ICA .form-group:nth-child(1) .input-3D4RiQgfsq6CVDibN-Ssyh"
     );
@@ -103,42 +101,49 @@ describe("Test flow import phrase seed  with Keplr wallet extension", () => {
       ".form-inner-container-1OFu9k06LiZAc8a8NY7ICA .btn-block"
     );
     await nextButton.click();
-  });
 
-  it("should click button next for confirm", async () => {
-    const nextButton = await extPage.$(
-      ".form-inner-container-1OFu9k06LiZAc8a8NY7ICA .btn-block"
-    );
-    await nextButton.click();
-  });
+    // 3. When the user goes to the chrome extension
+    // await extPage.bringToFront();
 
-  it("should click button done to complete the test with the Keplr extension", async () => {
-    const doneButton = await extPage.$(
-      ".container-2r_sTVfDeimjo0VLAYOa4O .btn-block"
-    );
-    await doneButton.click();
-    await appPage.bringToFront();
-  });
+    // 4. When the user writes the word "music" and its replacement "**TEST**"
+    // in the extension and the user clicks on the "replace" button
 
-  it("should click button connect wallet", async () => {
-    const connectWalletButton = await appPage.$(".btn-connect-wallet");
-    await connectWalletButton.click();
-  });
+    // const replaceBtn = await extPage.$(
+    //   ".btn.btn-outline-primary.btn-lg.btn-block"
+    // );
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+    // 1. When a user opens the React application
+    // appPage.bringToFront();
+    // 1.1. The user should see a button on the web page
+    // const btn = await appPage.$(".action");
+    // const btnText = await btn.evaluate((e) => e.innerText);
+    // expect(btnText).toEqual("click to show text");
+    // // 2. Then the user clicks the button to display the text
+    // await btn.click();
 
-  it("should click button arch", async () => {
-    // const archBtn = await appPage.$(".iwqrYX .gbRZrU:nth-child(1)");
-    const archBtn = await appPage.$(".test-arch");
-    try {
-      await archBtn.click();
-    } catch (error) {
-      console.log(error);
-    }
+    // 3. When the user goes to the chrome extension
+    // await extPage.bringToFront();
 
-    await sleep(2000);
+    // 4. When the user writes the word "music" and its replacement "**TEST**"
+    // in the extension and the user clicks on the "replace" button
+    // const fromInput = await extPage.$("#from");
+    // await fromInput.type("music");
+    // const toInput = await extPage.$("#to");
+    // await toInput.type("**TEST**");
+    // const replaceBtn = await extPage.$("#replace");
+    // const replaceBtn = await extPage.$(
+    //   ".btn.btn-outline-primary.btn-lg.btn-block"
+    // );
+    // await replaceBtn.click();
+
+    // // 5. When the user goes back to the website
+    // appPage.bringToFront();
+    // const textEl = await appPage.$(".text");
+    // const text = await textEl.evaluate((e) => e.innerText);
+    // // 5.1. Then the user should see the string "**TEST**" on the page
+    // expect(text).toEqual(expect.stringContaining("**TEST**"));
+    // // 5.2 Then the user should no longer see the string "music" on the page
+    // expect(text).toEqual(expect.not.stringContaining("music"));
   });
 
   // afterAll(async () => {
