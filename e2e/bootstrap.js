@@ -28,8 +28,6 @@ async function bootstrap(options = {}) {
 
   const extPage = await browser.newPage();
   const extensionUrl = `chrome-extension://${extensionId}/popup.html#/register`;
-  console.log("extensionUrl: ", extensionUrl);
-  // const extensionUrl = `chrome-extension://dmkamcknogkgcdfhhbddcghachkejeap/popup.html#/register`;
 
   await extPage.goto(extensionUrl, { waitUntil: "load" });
 
@@ -38,6 +36,7 @@ async function bootstrap(options = {}) {
     browser,
     extensionUrl,
     extPage,
+    extensionId,
   };
 }
 
